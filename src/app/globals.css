@@ -37,9 +37,22 @@ body {
 
 .header {
   background-color: #4CAF50;
-  padding: 1rem;
+  padding: 0.3rem;
   text-align: center;
   color: white;
+}
+
+.top-icon{
+  height: 20px
+}
+
+.lang-options{
+  background-color: transparent;
+  font-weight: 600;
+}
+
+.lang-options option{
+  color: #0a0a0a;
 }
 
 .container {
