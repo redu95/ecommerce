@@ -1,165 +1,103 @@
-import { faStar as farStar } from '@fortawesome/free-regular-svg-icons';
-import { faStar, faStarHalfAlt } from '@fortawesome/free-solid-svg-icons';
+"use client"; // Marking the component as a Client Component
+
+import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faStar, faStarHalfAlt, faShoppingCart } from '@fortawesome/free-solid-svg-icons';
+import { faStar as farStar } from '@fortawesome/free-regular-svg-icons';
+import CartIcon from './components/CartIcon'; // Importing the CartIcon component
+import { products } from './data/product';
+import { useAppContext } from '../context/AppContext';
 
 
-// app/page.js
-export default function HomePage() {
+export default function Layout({ children }) {
+  const [cartCount, setCartCount] = useState(0);
+  const [cart, setCart] = useState([]);
+
+  // Function to add item to cart
+  const addToCart = (product) => {
+    // Check if the item is already in the cart by ID
+    if (!cart.some(item => item.id === product.id)) {
+      setCart((prevCart) => [...prevCart, product]);
+      setCartCount(cartCount+1)
+    } else {
+      console.log("Item already in the cart");
+    }
+  };
+
   return (
     <div className="container">
+      {/* Navbar Section */}
+      <div className="pt-3 mt-3 z-10 navbar mx-auto px-4 flex items-center justify-around">
+        <div className="flex items-center space-x-6">
+          <div className="flex items-center space-x-1">
+            <img className="logo" src="images/logo.png" alt="Product Image" />
+            <span className="text-xl font-semibold text-green-600">Romlina</span>
+          </div>
+          <nav className=" flex justify-between ">
+            <div className='hidden md:flex space-x-4 '>
+              <select className="categories hover:text-green-600" defaultValue="en">
+                <option value="en">Categories</option>
+                <option value="el">Electronics</option>
+                <option value="fa">Fashion</option>
+                <option value="hg">Home & Garden</option>
+              </select>
+              <a href="#" className="text-gray-700 hover:text-green-600 font-medium">Deals</a>
+              <a href="#" className="text-gray-700 hover:text-green-600 font-medium">What's New</a>
+              <a href="#" className="text-gray-700 hover:text-green-600 font-medium">Delivery</a>
+            </div>
+            
+          </nav>
+        </div>
+        <div className="flex items-center space-x-6">
+          <div className="relative">
+            <div className='  ml-80'>
+              <CartIcon cartCount={cartCount} /> {/* Use the CartIcon component */}
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Banner Section */}
-      <div className="banner grid grid-cols-1 md:grid-cols-3 gap-4">
-        {/* <div className=""> */}
-          <div className="col-span-2 mt-12 text-left">
-            <h1 className="text-2xl font-extrabold">Grab Up to 50% Off On <br/> Selected Headphones</h1>
-            <p className="mt-4 text-gray-500 text-md text-black">Discover our exclusive deals on a wide range of headphones. Hurry up before the offer ends!</p>
-            <button className="mt-6 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 font-bold">
-              Shop Now
+      <div className="mt-24 banner grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="col-span-2 mt-12 text-left">
+          <h1 className="text-2xl font-extrabold">Grab Up to 50% Off On <br /> Selected Headphones</h1>
+          <p className="mt-4 text-gray-500 text-md text-black">Discover our exclusive deals on a wide range of headphones. Hurry up before the offer ends!</p>
+          <button className="mt-6 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 font-bold">Shop Now</button>
+        </div>
+        <div className="col-span-1 m-0 p-0">
+          <img src="/images/headset-enjoy.png" alt="Headphones" className="w-full h-auto headset-enjoy" />
+        </div>
+      </div>
+
+      {/* Product grid section */}
+      <div className="grid">
+        {products.map(product => (
+          <div key={product.id} className="product-card">
+            <img className="product-image" src={product.image} alt={product.name} />
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pb-5">
+              <div className="col-span-2 text-left">
+                <h3>{product.name}</h3>
+                <p className="product-description">{product.description}</p>
+                <div className="star-rating flex w-20">
+                  {[...Array(Math.floor(product.rating))].map((_, i) => (
+                    <FontAwesomeIcon key={i} icon={faStar} className="text-green-500" />
+                  ))}
+                  {product.rating % 1 !== 0 && <FontAwesomeIcon icon={faStarHalfAlt} className="text-green-500" />}
+                  {[...Array(5 - Math.ceil(product.rating))].map((_, i) => (
+                    <FontAwesomeIcon key={i} icon={farStar} className="text-gray-400" />
+                  ))}
+                </div>
+              </div>
+              <div className="col-span-1 m-0 p-0">
+                <p className="price">${product.price}</p>
+              </div>
+            </div>
+            <button onClick={() => addToCart(product)}>
+              Add to Cart
             </button>
           </div>
-          <div className="col-span-1 m-0 p-0">
-            <img src="/images/headset-enjoy.png" alt="Left Image"  className="w-full h-auto headset-enjoy" />
-          </div>
-        {/* </div> */}
-      </div>
-
-      {/* Product Grid */}
-      <div className="grid">
-        {/* Product 1 */}
-        <div className="product-card">
-          <img className="product-image" src="images/airpod.png" alt="Product Image" />
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pb-5">
-            <div className="col-span-2 text-left">
-              <h3>Wireless Earbuds</h3>
-              <p className='product-description'>White, Bluetooth, LED</p>
-              {/* Star Rating */}
-              <div className="star-rating flex w-20">
-                {/* Full stars */}
-                {[...Array(Math.floor(5))].map((_, i) => (
-                  <FontAwesomeIcon key={i} icon={faStar} className="text-green-500" />
-                ))}
-
-                {/* Half star */}
-                {5 % 1 !== 0 && (
-                  <FontAwesomeIcon icon={faStarHalfAlt} className="text-green-500" />
-                )}
-
-                {/* Empty stars */}
-                {[...Array(5 - Math.ceil(5))].map((_, i) => (
-                  <FontAwesomeIcon key={i} icon={farStar} className="text-gray-400" />
-                ))}
-              </div>
-
-            </div>
-            <div className="col-span-1 m-0 p-0">
-              <p className='price'>$29.99</p>
-            </div>
-          </div>
-          <button>Add to Cart</button>
-        </div>
-
-
-        {/* Product 2 */}
-        <div className="product-card">
-          <img className="product-image" src="images/pink.png" alt="Product Image" />
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pb-5">
-            <div className="col-span-2 text-left">
-              <h3>Alpha Headphones</h3>
-              <p className='product-description'>Big, Stereo, High Quality</p>
-              {/* Star Rating */}
-              <div className="star-rating flex w-20">
-                {/* Full stars */}
-                {[...Array(Math.floor(4.5))].map((_, i) => (
-                  <FontAwesomeIcon key={i} icon={faStar} className="text-green-500" />
-                ))}
-
-                {/* Half star */}
-                {4.5 % 1 !== 0 && (
-                  <FontAwesomeIcon icon={faStarHalfAlt} className="text-green-500" />
-                )}
-
-                {/* Empty stars */}
-                {[...Array(5 - Math.ceil(4.5))].map((_, i) => (
-                  <FontAwesomeIcon key={i} icon={farStar} className="text-gray-400" />
-                ))}
-              </div>
-
-            </div>
-            <div className="col-span-1 m-0 p-0">
-              <p className='price'>$29.99</p>
-            </div>
-          </div>
-          <button>Add to Cart</button>
-        </div>
-
-        {/* Product 3 */}
-        <div className="product-card">
-          <img className="product-image" src="images/black.png" alt="Product Image" />
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pb-5">
-            <div className="col-span-2 text-left">
-              <h3>BE11 Earphones</h3>
-              <p className='product-description'>Black, Stereo, High Quality</p>
-              {/* Star Rating */}
-              <div className="star-rating flex w-20">
-                {/* Full stars */}
-                {[...Array(Math.floor(4.5))].map((_, i) => (
-                  <FontAwesomeIcon key={i} icon={faStar} className="text-green-500" />
-                ))}
-
-                {/* Half star */}
-                {4.5 % 1 !== 0 && (
-                  <FontAwesomeIcon icon={faStarHalfAlt} className="text-green-500" />
-                )}
-
-                {/* Empty stars */}
-                {[...Array(5 - Math.ceil(4.5))].map((_, i) => (
-                  <FontAwesomeIcon key={i} icon={farStar} className="text-gray-400" />
-                ))}
-              </div>
-
-            </div>
-            <div className="col-span-1 m-0 p-0">
-              <p className='price'>$59.99</p>
-            </div>
-          </div>
-          <button>Add to Cart</button>
-        </div>
-
-        {/* Product 4 */}
-        <div className="product-card">
-          <img className="product-image" src="images/airpod.png" alt="Product Image" />
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pb-5">
-            <div className="col-span-2 text-left">
-              <h3>VR200 Headphones</h3>
-              <p className='product-description'>Black, Stereo, High Quality</p>
-              {/* Star Rating */}
-              <div className="star-rating flex w-20">
-                {/* Full stars */}
-                {[...Array(Math.floor(4.5))].map((_, i) => (
-                  <FontAwesomeIcon key={i} icon={faStar} className="text-green-500" />
-                ))}
-
-                {/* Half star */}
-                {4.5 % 1 !== 0 && (
-                  <FontAwesomeIcon icon={faStarHalfAlt} className="text-green-500" />
-                )}
-
-                {/* Empty stars */}
-                {[...Array(5 - Math.ceil(4))].map((_, i) => (
-                  <FontAwesomeIcon key={i} icon={farStar} className="text-gray-400" />
-                ))}
-              </div>
-
-            </div>
-            <div className="col-span-1 m-0 p-0">
-              <p className='price'>$79.99</p>
-            </div>
-          </div>
-          <button>Add to Cart</button>
-        </div>
-
-        {/* Add more product placeholders as needed */}
+        ))}
       </div>
     </div>
-  )
+  );
 }

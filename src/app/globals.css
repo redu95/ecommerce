@@ -35,6 +35,15 @@ body {
   background-color: #f5f5f5;
 }
 
+.logo{
+  width: 120px;
+}
+
+.categories{
+  background-color: transparent;
+  color: #0a0a0a;
+}
+
 .header {
   background-color: #4CAF50;
   padding: 0.3rem;
@@ -59,6 +68,15 @@ body {
   max-width: 1200px;
   margin: 0 auto;
   padding: 1rem;
+}
+
+.navbar{
+  position: fixed;
+  width: auto;
+  /* border: red solid;  */
+  backdrop-filter: blur(10px);
+  background-color: rgba(255, 255, 255, 0.2);
+  width: 100%;
 }
 
 .grid {
