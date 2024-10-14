@@ -1,34 +1,25 @@
 "use client"; // Marking the component as a Client Component
 
-import { useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStar, faStarHalfAlt, faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 import { faStar as farStar } from '@fortawesome/free-regular-svg-icons';
+import { faStar, faStarHalfAlt } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useState } from 'react';
 import CartIcon from './components/CartIcon'; // Importing the CartIcon component
+import { useAppContext } from './context/AppContext';
 import { products } from './data/product';
-import { useAppContext } from '../context/AppContext';
 
 
 export default function Layout({ children }) {
-  const [cartCount, setCartCount] = useState(0);
+
   const [cart, setCart] = useState([]);
 
-  // Function to add item to cart
-  const addToCart = (product) => {
-    // Check if the item is already in the cart by ID
-    if (!cart.some(item => item.id === product.id)) {
-      setCart((prevCart) => [...prevCart, product]);
-      setCartCount(cartCount+1)
-    } else {
-      console.log("Item already in the cart");
-    }
-  };
+  const { addToCart, cartCount } = useAppContext();
 
   return (
     <div className="container">
       {/* Navbar Section */}
       <div className="pt-3 mt-3 z-10 navbar mx-auto px-4 flex items-center justify-around">
-        <div className="flex items-center space-x-6">
+        <div className="flex items-center space-x-6 ">
           <div className="flex items-center space-x-1">
             <img className="logo" src="images/logo.png" alt="Product Image" />
             <span className="text-xl font-semibold text-green-600">Romlina</span>
@@ -45,15 +36,11 @@ export default function Layout({ children }) {
               <a href="#" className="text-gray-700 hover:text-green-600 font-medium">What's New</a>
               <a href="#" className="text-gray-700 hover:text-green-600 font-medium">Delivery</a>
             </div>
-            
-          </nav>
-        </div>
-        <div className="flex items-center space-x-6">
-          <div className="relative">
             <div className='  ml-80'>
               <CartIcon cartCount={cartCount} /> {/* Use the CartIcon component */}
             </div>
-          </div>
+            
+          </nav>
         </div>
       </div>
 
