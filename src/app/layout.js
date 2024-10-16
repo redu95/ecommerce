@@ -1,6 +1,6 @@
+import { faFacebook, faInstagram, faTelegramPlane, faTwitter } from '@fortawesome/free-brands-svg-icons';
 import { faCopyright, faPhone } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFacebook, faTelegramPlane, faTwitter, faInstagram } from '@fortawesome/free-brands-svg-icons';
 import localFont from "next/font/local";
 import { AppProvider } from './context/AppContext';
 import "./globals.css";

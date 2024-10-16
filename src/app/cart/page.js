@@ -1,24 +1,21 @@
 // src/app/cart/page.js
 'use client';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
 import { useAppContext } from '../context/AppContext';
 import styles from './cart.module.css';
 
 export default function CartPage() {
-  const { cart, removeFromCart } = useAppContext();
-  const [quantities, setQuantities] = useState({}); // State to track quantities
+  const { cart, removeFromCart, updateQuantity } = useAppContext(); // Import updateQuantity
   const router = useRouter();
 
   const handleQuantityChange = (id, delta) => {
-    setQuantities((prev) => ({
-      ...prev,
-      [id]: Math.max((prev[id] || 0) + delta, 0), // Ensure quantity is non-negative
-    }));
+    const product = cart.find((item) => item.id === id);
+    const newQuantity = Math.max((product.quantity || 1) + delta, 0); // Ensure quantity is non-negative
+    updateQuantity(id, newQuantity);
   };
 
   const handleCheckout = () => {
-    router.push('/checkout'); // Navigate to checkout page
+    router.push('/checkout');
   };
 
   return (
@@ -27,7 +24,6 @@ export default function CartPage() {
       {cart.length === 0 ? (
         <p>Your cart is empty.</p>
       ) : (
-        <div>
         <div className="grid gap-4">
           {cart.map((item) => (
             <div key={item.id} className="cart-item border p-4 rounded-lg flex justify-between items-center">
@@ -36,7 +32,7 @@ export default function CartPage() {
                 <div className="ml-4">
                   <h3 className="font-bold">{item.name}</h3>
                   <p>{item.description}</p>
-                  <p className="text-green-600 font-bold">${item.price}</p>
+                  <p className="text-green-600 font-bold">${item.price.toFixed(2)}</p>
                   <div className="flex items-center mt-2">
                     <button
                       onClick={() => handleQuantityChange(item.id, -1)}
@@ -46,7 +42,7 @@ export default function CartPage() {
                     </button>
                     <input
                       type="number"
-                      value={quantities[item.id] || 0}
+                      value={item.quantity}
                       readOnly
                       className="mx-2 w-16 text-center border"
                     />
@@ -67,12 +63,11 @@ export default function CartPage() {
               </button>
             </div>
           ))}
-          </div>
 
-          <div className="text-center  mt-6">
+          <div className="text-center mt-6">
             <button
               onClick={handleCheckout}
-              className="text-white hover:outline-none hover:bg-green-600 bg-green-500 transition duration-300 ease-out ...  px-4 py-2 rounded"
+              className="text-white hover:outline-none hover:bg-green-600 bg-green-500 transition duration-300 ease-out px-4 py-2 rounded"
             >
               Checkout
             </button>

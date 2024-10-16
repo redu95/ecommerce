@@ -4,7 +4,7 @@ import { faStar as farStar } from '@fortawesome/free-regular-svg-icons';
 import { faStar, faStarHalfAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState } from 'react';
-import CartIcon from './components/CartIcon'; // Importing the CartIcon component
+import CartIcon from './components/CartIcon';
 import { useAppContext } from './context/AppContext';
 import { products } from './data/product';
 
@@ -16,7 +16,7 @@ export default function Layout({ children }) {
   const { addToCart, cartCount } = useAppContext();
 
   return (
-    <div className="container">
+    <div>
       {/* Navbar Section */}
       <div className="pt-3 mt-3 z-10 navbar mx-auto px-4 flex items-center justify-around">
         <div className="flex items-center space-x-6 ">
@@ -43,6 +43,7 @@ export default function Layout({ children }) {
           </nav>
         </div>
       </div>
+    <div className="container">
 
       {/* Banner Section */}
       <div className="mt-24 banner grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -85,6 +86,7 @@ export default function Layout({ children }) {
           </div>
         ))}
       </div>
+    </div>
     </div>
   );
 }

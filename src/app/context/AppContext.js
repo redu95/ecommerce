@@ -25,26 +25,29 @@ export function AppProvider({ children }) {
 
   const addToCart = (product) => {
     if (!cart.some(item => item.id === product.id)) {
-      setCart((prevCart) => {
-        const updatedCart = [...prevCart, product];
-        localStorage.setItem('cart', JSON.stringify(updatedCart));
-        return updatedCart;
-      });
+      setCart((prevCart) => [...prevCart, { ...product, quantity: 1 }]);
     } else {
       console.log("Item already in the cart");
     }
   };
 
   const removeFromCart = (product) => {
-    setCart((prevCart) => {
-      const updatedCart = prevCart.filter(item => item.id !== product.id);
-      localStorage.setItem('cart', JSON.stringify(updatedCart));
-      return updatedCart;
-    });
+    setCart((prevCart) =>
+      prevCart.filter(item => item.id !== product.id)
+    );
+  };
+
+  // New: Update Quantity Function
+  const updateQuantity = (id, newQuantity) => {
+    setCart((prevCart) =>
+      prevCart.map((item) =>
+        item.id === id ? { ...item, quantity: newQuantity } : item
+      )
+    );
   };
 
   return (
-    <AppContext.Provider value={{ cart, cartCount, addToCart, removeFromCart }}>
+    <AppContext.Provider value={{ cart, cartCount, addToCart, removeFromCart, updateQuantity }}>
       {children}
     </AppContext.Provider>
   );
