@@ -1,6 +1,6 @@
-import { faFacebook, faInstagram, faTelegramPlane, faTwitter } from '@fortawesome/free-brands-svg-icons';
-import { faCopyright, faPhone } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCopyright } from "@fortawesome/free-regular-svg-icons";
+import { faPhone } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import localFont from "next/font/local";
 import { AppProvider } from './context/AppContext';
 import "./globals.css";
@@ -32,19 +32,19 @@ export default function RootLayout({ children }) {
       <body>
       <header className="header fixed w-full z-20">
         <div className="flex justify-around text-xs w-full items-center ">
-          {/* Left section */}
+          
           <div className="flex items-center justify-start ">
             <FontAwesomeIcon className='top-icon mx-2' icon={faPhone} />
             <p>+251 992 93 9495</p>
           </div>
 
-          {/* Center section */}
+        
           <div className="flex items-center justify-center ">
             <FontAwesomeIcon className='top-icon mx-2' icon={faCopyright} />
             <p>2024 All rights reserved | Rediet Muluken</p>
           </div>
 
-          {/* Right section */}
+          
           <div className=" flex items-center justify-end ">
             <select className='lang-options' defaultValue="en">
               <option value="en">En</option>
@@ -60,7 +60,7 @@ export default function RootLayout({ children }) {
         </AppProvider>
         
 
-        <footer style={{ backgroundColor: '#555', padding: '20px 0', marginTop: '40px' }}>
+        {/* <footer style={{ backgroundColor: '#555', padding: '20px 0', marginTop: '40px' }}>
           <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 20px', textAlign: 'center' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', marginBottom: '20px' }}>
               <div>
@@ -88,7 +88,7 @@ export default function RootLayout({ children }) {
             </div>
             <p style={{ fontSize: '14px' }}>© 2024 Romlina. All Rights Reserved.</p>
           </div>
-        </footer>
+        </footer> */}
 
       </body>
     </html>

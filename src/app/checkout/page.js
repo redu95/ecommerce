@@ -6,7 +6,7 @@ import { useAppContext } from '../context/AppContext';
 import styles from './checkout.module.css';
 
 export default function CheckoutPage() {
-  const { cart } = useAppContext(); // Get cart from AppContext
+  const { cart, handlePlaceOrder } = useAppContext();
   const router = useRouter();
 
   // Calculate total price for each product (price * quantity)
@@ -14,12 +14,6 @@ export default function CheckoutPage() {
 
   // Calculate the grand total for the entire cart
   const grandTotal = cart.reduce((total, item) => total + calculateTotalPrice(item), 0);
-
-  const handlePlaceOrder = () => {
-    alert('Order placed successfully! Thank you for your purchase.');
-    // Clear cart or redirect logic can go here
-    router.push('/'); // Redirect to homepage after order
-  };
 
   return (
     <div className={styles.cartContainer}>

@@ -3,7 +3,8 @@
 import { faStar as farStar } from '@fortawesome/free-regular-svg-icons';
 import { faStar, faStarHalfAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 import CartIcon from './components/CartIcon';
 import { useAppContext } from './context/AppContext';
 import { products } from './data/product';
@@ -12,8 +13,20 @@ import { products } from './data/product';
 export default function Layout({ children }) {
 
   const [cart, setCart] = useState([]);
+  const router = useRouter();
 
   const { addToCart, cartCount } = useAppContext();
+
+  useEffect(() => {
+    // Check if the 'auth-token' cookie exists
+    
+    // const token = document.cookie.split('; ').find(row => row.startsWith('auth-token='));
+    const token = localStorage.getItem('auth-token');
+    console.log("token", token )
+    if (!token) {
+      router.push('/login'); // Redirect to login if no token
+    }
+  }, [router]);
 
   return (
     <div>
