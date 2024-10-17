@@ -24,7 +24,7 @@ export default function Layout({ children }) {
     const token = localStorage.getItem('auth-token');
     console.log("token", token )
     if (!token) {
-      router.push('/login'); // Redirect to login if no token
+      router.push('/login'); // Redirect to signup if no token
     }
   }, [router]);
 
