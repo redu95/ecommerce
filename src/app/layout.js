@@ -4,6 +4,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import localFont from "next/font/local";
 import { AppProvider } from './context/AppContext';
 import "./globals.css";
+import { faFacebook,faTelegramPlane,faInstagram,faTwitter } from "@fortawesome/free-brands-svg-icons";
+
 
 
 const geistSans = localFont({
@@ -60,7 +62,7 @@ export default function RootLayout({ children }) {
         </AppProvider>
         
 
-        {/* <footer style={{ backgroundColor: '#555', padding: '20px 0', marginTop: '40px' }}>
+        <footer style={{ backgroundColor: '#555', padding: '20px 0', marginTop: '40px' }}>
           <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 20px', textAlign: 'center' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', marginBottom: '20px' }}>
               <div>
@@ -88,7 +90,7 @@ export default function RootLayout({ children }) {
             </div>
             <p style={{ fontSize: '14px' }}>© 2024 Romlina. All Rights Reserved.</p>
           </div>
-        </footer> */}
+        </footer> 
 
       </body>
     </html>
